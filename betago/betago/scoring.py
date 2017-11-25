@@ -33,6 +33,8 @@ def evaluate_territory(board):
     trivially dead groups.
     """
     status = {}
+    
+    #  （0，0）（0，1）。。。（0，18） （1，0）（1，1）（1，2）。。。（1，18）    。。。。。。（18，18） 生成361个点
     for r, c in itertools.product(list(range(board.board_size)), list(range(board.board_size))):
         if (r, c) in status:
             # Already visited this as part of a different group.

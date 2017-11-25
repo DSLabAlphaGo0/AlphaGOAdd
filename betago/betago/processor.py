@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import numpy as np
 from .dataloader.base_processor import GoDataProcessor, GoFileProcessor
-from six.moves import range
+# from six.moves import range
 
 
 class SevenPlaneProcessor(GoDataProcessor):
@@ -39,7 +39,7 @@ class SevenPlaneProcessor(GoDataProcessor):
         row, col = move
         enemy_color = go_board.other_color(color)
         label = row * 19 + col
-        move_array = np.zeros((num_planes, go_board.board_size, go_board.board_size))
+        move_array = np.zeros((num_planes, go_board.board_size, go_board.board_size))  #go_board.board_size=19
         for row in range(0, go_board.board_size):
             for col in range(0, go_board.board_size):
                 pos = (row, col)

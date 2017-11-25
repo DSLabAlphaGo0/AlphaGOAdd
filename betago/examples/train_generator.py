@@ -58,6 +58,10 @@ model.add(Dense(nb_classes))
 model.add(Activation('softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adadelta', metrics=['accuracy'])
 
+
+#fit_generator()
+#利用Python的生成器，逐个生成数据的batch并进行训练。生成器与模型将并行执行以提高效率。
+# 例如，该函数允许我们在CPU上进行实时的数据提升，同时在GPU上进行模型训练
 model.fit_generator(data_generator.generate(batch_size=batch_size, nb_classes=nb_classes),
                     samples_per_epoch=data_generator.get_num_samples(), nb_epoch=args.epochs,
                     callbacks=[ModelCheckpoint(checkpoint_file_pattern)])

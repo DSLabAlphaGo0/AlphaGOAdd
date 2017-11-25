@@ -89,9 +89,9 @@ class HTTPFrontend(object):
             row = content['j']
             print('Received move:')
             print((col, row))
-            self.bot.apply_move('b', (row, col))
+            self.bot.apply_move('b', (row, col))            #KerasBot.apply_move()
 
-            bot_row, bot_col = self.bot.select_move('w')
+            bot_row, bot_col = self.bot.select_move('w')     #在调用的过程中已经 apply_move()了
             print('Prediction:')
             print((bot_col, bot_row))
             result = {'i': bot_col, 'j': bot_row}
@@ -141,7 +141,7 @@ class KerasBot(GoModel):
         super(KerasBot, self).__init__(model=model, processor=processor)
         self.top_n = top_n
 
-    def apply_move(self, color, move):
+    def apply_move(self, color, move):                 # for e.g :move = (5,16) color = 黑子，这一步是人下的 botcolor=电脑
         # Apply human move
         self.go_board.apply_move(color, move)
 
@@ -152,6 +152,8 @@ class KerasBot(GoModel):
             self.go_board.apply_move(bot_color, move)
         return move
 
+
+    #通过训练好的机器 产生10个下一步棋该走的位置。如果没有就随机产生一个位置
     def _move_generator(self, bot_color):
         return chain(
             # First try the model.
@@ -173,7 +175,7 @@ class KerasBot(GoModel):
 
         # Generate bot move.
         pred = np.squeeze(self.model.predict(X))
-        top_n_pred_idx = pred.argsort()[-self.top_n:][::-1]
+        top_n_pred_idx = pred.argsort()[-self.top_n:][::-1]          #这里电脑可以产生10个下期的位置
         for idx in top_n_pred_idx:
             prediction = int(idx)
             pred_row = prediction // 19

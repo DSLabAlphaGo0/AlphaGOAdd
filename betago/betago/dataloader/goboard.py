@@ -1,3 +1,4 @@
+#coding:utf-8
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
@@ -21,11 +22,13 @@ class GoBoard(object):
         board_size: Side length of the board, defaulting to 19.
         go_strings: Dictionary of go_string objects representing stones and liberties.
         '''
+        
+        #ko  指围棋中的劫   ko_last_move _num_captured = 1 是为了防止围棋一直出现互相吃子现象
         self.ko_last_move_num_captured = 0
         self.ko_last_move = -3
         self.board_size = board_size
-        self.board = {}
-        self.go_strings = {}
+        self.board = {}                         #数据结构     （17，8）：color     color='b' or  'w'
+        self.go_strings = {}                    #数据结构      （17，8）：go_string =（多少口气，）在程序的74行使用了
 
     def fold_go_strings(self, target, source, join_position):
         ''' Merge two go strings by joining their common moves'''
@@ -136,6 +139,10 @@ class GoBoard(object):
             raise ValueError('Inconsistency between board and go_strings at %r' % enemy_pos)
 
         # Update adjacent liberties on board
+        # 如果黑子下完后，黑子下的地点作为our_pos  那么白子就是enemy_pos了
+        # 黑子会判断它的上下左右   查看白子的气 因为这颗白子和黑子相连 所以需要enemy_string.remove_liberty(our_pos)
+        # 将白子旁边的气（liberty）remove掉以后
+        # 如果白子的气为0 ，那么就需要将这颗白子连同和它相连的白子从棋盘中拿去
         enemy_string.remove_liberty(our_pos)
         if enemy_string.get_num_liberties() == 0:
             for enemy_pos in enemy_string.stones.stones:
@@ -148,7 +155,7 @@ class GoBoard(object):
                     self.add_liberty_to_adjacent_string(adjstring, enemy_pos, play_color)
 
     def apply_move(self, play_color, pos):
-        '''
+        '''       比如 play_color = 'b' pos = (10,7)
         Execute move for given color, i.e. play current stone on this board
         Parameters:
         -----------
@@ -177,12 +184,16 @@ class GoBoard(object):
         # Store last move for ko
         self.ko_last_move = pos
 
+
+
+    # 给加了一口气
     def add_liberty_to_adjacent_string(self, string_pos, liberty_pos, color):
         ''' Insert liberty into corresponding GoString '''
         if self.board.get(string_pos) != color:
             return
         go_string = self.go_strings[string_pos]
         go_string.insert_liberty(liberty_pos)
+
 
     def fold_our_moves(self, first_string, color, pos, join_position):
         ''' Fold current board situation with a new move played by us'''
@@ -263,6 +274,10 @@ class BoardSequence(object):
         return result
 
 
+
+
+#对gostring 的简单理解   如果棋盘上某个点上有棋子，那么我们就创建一个gostring。 这个gostring保存的值不只是这个position。还保存
+# 和他相连（必须是连接的）的颜色相同棋子的位置。并且他还保存这一片棋子的有多少口气
 class GoString(object):
     '''
     Represents a string of contiguous stones of one color on the board, including a list of all its liberties.
@@ -336,7 +351,7 @@ def to_string(board):
     for r in range(board.board_size):
         row = ''
         for c in range(board.board_size):
-            row += board.board.get((r, c), '.')
+            row += board.board.get((r, c), '.')             #如果取不到值的话  就返回 '.'
         rows.append(row)
     rows.reverse()
     return '\n'.join(rows)

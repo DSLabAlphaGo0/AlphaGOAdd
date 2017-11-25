@@ -1,3 +1,4 @@
+#coding:utf-8
 from __future__ import print_function
 import os
 import webbrowser
@@ -23,8 +24,13 @@ input_channels = processor.num_planes
 
 # Load go data from 1000 KGS games and one-hot encode labels
 X, y = processor.load_go_data(num_samples=1000)
+# SevenPlaneProcessor(GoDataProcessor)->GoDataProcessor->
+# def load_go_data(self, types=['train'], data_dir='data', num_samples=1000)
+
+
 X = X.astype('float32')
-Y = np_utils.to_categorical(y, nb_classes)
+
+Y = np_utils.to_categorical(y, nb_classes)              #变成 19*19的 0-1 矩阵
 
 # Specify a keras model with two convolutional layers and two dense layers,
 # connecting the (num_samples, 7, 19, 19) input to the 19*19 output vector.

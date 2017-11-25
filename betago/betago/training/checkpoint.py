@@ -66,6 +66,8 @@ class TrainingRun(object):
     @classmethod
     def create(cls, filename, index, layer_fn):
         model = Sequential()
+        
+        #    看到没有   这里就用到了 betago／networks／large.py 中定义的神经网络中间层的设计
         for layer in layer_fn((7, 19, 19)):
             model.add(layer)
         model.add(Dense(19 * 19))
