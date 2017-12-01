@@ -28,6 +28,7 @@
   <script type="text/javascript" src="{% static "images/large/board.js" %}"></script>
   <script type="text/javascript">
     /*global JGO boardInit*/
+    var id = {{uid}};
     var jboard = new JGO.Board(19);
     var jsetup = new JGO.Setup(jboard, JGO.BOARD.largeWalnut);
     var player = JGO.BLACK; // next player
@@ -93,8 +94,8 @@
       xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState > 3 && xmlhttp.status == 200) {
             success(xmlhttp.responseText);
-            console.log(xmlhttp.readyState);
-            console.log(xmlhttp.status);
+            // console.log(xmlhttp.readyState);
+            // console.log(xmlhttp.status);
             console.log("success");
         }
       };
@@ -136,6 +137,7 @@
 
         playMove(coord, player, ko, function() {
           player = JGO.WHITE;
+          coord['uid'] = id;
           postMove('/prediction', coord,
             function(data) {
               console.log("开始接收数据")
@@ -143,9 +145,9 @@
               console.log(botcoord);
               coord.i = botcoord.i;
               coord.j = botcoord.j;
-
               console.log("Recieved move from server:");
               console.log("(" + coord.i + ", " + coord.j + ")");
+              console.log(coord.uid);
               playMove(coord, player, ko);
             });
         });

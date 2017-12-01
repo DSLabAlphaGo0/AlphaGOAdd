@@ -19,7 +19,7 @@ from go.views import My_Go
 
 go = My_Go()
 urlpatterns = [
-    url(r'^$',go.TTT.home,name='go'),
-    url(r'^prediction',go.TTT.prediction,name='prediction'),
+    url(r'^$',go.home,name='go'),
+    url(r'^prediction',go.prediction,name='prediction'),
     url(r'^admin/', admin.site.urls),
 ]
