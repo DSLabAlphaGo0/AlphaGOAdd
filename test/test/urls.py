@@ -22,4 +22,6 @@ urlpatterns = [
     url(r'^$',go.home,name='go'),
     url(r'^prediction',go.prediction,name='prediction'),
     url(r'^admin/', admin.site.urls),
+    url(r'^control',go.control,name='control'),
+    url(r'^counting',go.counting,name='counting'),
 ]

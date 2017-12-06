@@ -3,30 +3,32 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <link rel="shortcut icon" type="image/png" href="{{STATIC_URL}}/favicon.ico"/>
+
 <head>
   <meta charset="utf-8">
   <title>BetaGo user interface</title>
-  <style>
-    body {
-      text-align: center;
-  }
-    div {
-      margin: 20px auto;
-      color: #888;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="{% static "css/board.css" %}">
+
 </head>
 
 <body>
-  <h1> BetaGo </h1>
-  <div id="board"></div>
+
   <div>
-      <h3><p>Hello World</p><h3>
+
+  </div>
+
+  <h1> Our Go Game </h1>
+  <div id="board"></div>
+  <div id="control">
+    <a href="javascript:passStep();" class="button">过手</a>
+    <a href="javascript:showCurrent();" class="button">当前棋局</a>
+    <a href="javascript:giveUp();" class="button">认输</a>
   </div>
   {% csrf_token %}
-  <script type="text/javascript" src="{% static "js/dist/jgoboard-latest.js" %}"></script>
-  <script type="text/javascript" src="{% static "images/large/board.js" %}"></script>
-  <script type="text/javascript">
+  <script src="{% static "js/dist/jgoboard-latest.js" %}"></script>
+  <script src="{% static "images/large/board.js" %}"></script>
+  <script src="{% static "js/jquery.min.js" %}"></script>
+  <script>
     /*global JGO boardInit*/
     var id = {{uid}};
     var jboard = new JGO.Board(19);
@@ -44,12 +46,10 @@
       var boardRaw = jboard.getRaw(); // Use current state (blank) as a template
       boardRaw.stones = boardInit; // Add in our stone data
       jboard.setRaw(boardRaw); // Set it and forget it®
-    } else {
+    }
+    else {
       // alert that this data is missing
     }
-
-
-
     function playMove(coord, player, ko, success, failure) {
       success = success || function() {};
       failure = failure || function() {};
@@ -57,15 +57,12 @@
       if (play.success) {
         jboard.setType(coord, player); // play stone
         jboard.setType(play.captures, JGO.CLEAR); // clear opponent's stones
-
         if (lastMove)
           jboard.setMark(lastMove, JGO.MARK.NONE); // clear previous mark
         if (ko)
           jboard.setMark(ko, JGO.MARK.NONE); // clear previous ko mark
-
         jboard.setMark(coord, JGO.MARK.CIRCLE); // mark move
         lastMove = coord;
-
         if (play.ko)
           jboard.setMark(play.ko, JGO.MARK.CIRCLE); // mark ko, too
         ko = play.ko;
@@ -76,13 +73,10 @@
         failure(play.errorMsg);
       }
     }
-
     function illegalMove(errorMsg) {
       console.log("Illegal move: " + errorMsg);
       alert("Illegal move: " + errorMsg);
     }
-
-
     // Man, do I want to use superagent here. Repeat: add. no. dependencies.
     function postMove(url, data, success) {
       console.log("Sent move to server!");
@@ -103,24 +97,17 @@
       xmlhttp.send(JSON.stringify(data));
       return xmlhttp;
     }
-
-
     jboard.setType(JGO.util.getHandicapCoordinates(jboard.width, 0), JGO.BLACK);
-
     jsetup.setOptions({
       stars: {
         points: 5
       }
     });
-
-
     jsetup.create('board', function(canvas) {
-
       canvas.addListener('click', function(coord, ev) {
         console.log("Attepting human move:");
         console.log("(" + coord.i + ", " + coord.j + ")");
         var opponent = (player == JGO.BLACK) ? JGO.WHITE : JGO.BLACK;
-
         if (ev.shiftKey) { // on shift do edit
           if (jboard.getMark(coord) == JGO.MARK.NONE)
             jboard.setMark(coord, JGO.MARK.SELECTED);
@@ -128,13 +115,11 @@
             jboard.setMark(coord, JGO.MARK.NONE);
           return;
         }
-
         // clear hover away - it'll be replaced or then it will be an illegal move
         // in any case so no need to worry about putting it back afterwards
         if (lastHover)
           jboard.setType(new JGO.Coordinate(lastX, lastY), JGO.CLEAR);
         lastHover = false;
-
         playMove(coord, player, ko, function() {
           player = JGO.WHITE;
           coord['uid'] = id;
@@ -153,17 +138,13 @@
         });
         player = JGO.BLACK;
       });
-
       canvas.addListener('mousemove', function(coord, ev) {
         if (coord.i == -1 || coord.j == -1 || (coord.i == lastX && coord.j == lastY))
           return;
-
         if (lastHover) // clear previous hover if there was one
           jboard.setType(new JGO.Coordinate(lastX, lastY), JGO.CLEAR);
-
         lastX = coord.i;
         lastY = coord.j;
-
         if (jboard.getType(coord) == JGO.CLEAR && jboard.getMark(coord) == JGO.MARK.NONE) {
           jboard.setType(coord, player == JGO.WHITE ? JGO.DIM_WHITE : JGO.DIM_BLACK);
           lastHover = true;
@@ -171,16 +152,25 @@
         else
           lastHover = false;
       });
-
       canvas.addListener('mouseout', function(ev) {
         if (lastHover)
           jboard.setType(new JGO.Coordinate(lastX, lastY), JGO.CLEAR);
-
         lastHover = false;
       });
     });
+    function passStep() {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "/control",
+            data: JSON.stringify({"uid":id}),
+            success: function (json) {
+                playMove(new JGO.Coordinate(json.i, json.j), JGO.WHITE, ko);
+            }
+        });
+    }
   </script>
-
+  <script src="{% static "js/game.js" %}"></script>
 </body>
 
 </html>

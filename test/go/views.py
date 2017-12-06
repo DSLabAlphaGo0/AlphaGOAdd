@@ -8,6 +8,8 @@ import yaml
 import json
 import re
 import numpy as np
+from betago import scoring
+from betago.dataloader import goboard
 from keras.models import model_from_yaml
 from betago.model import KerasBot
 from betago.processor import SevenPlaneProcessor
@@ -32,6 +34,8 @@ class My_Go(object):
         self.model.predict(np.zeros([1, 7,19,19]))
         self.count=0
         self.bots = {}
+        self.col=0
+        self.row=0
 
     def home(self,request):
         self.processor = SevenPlaneProcessor()
@@ -56,10 +60,15 @@ class My_Go(object):
 
     @csrf_exempt
     def prediction(self,request):
-        result = re.findall('\d+',request.body)
-        col = int(result[0])
-        row = int(result[1])
-        id  = int(result[2])
+        body_unicode = request.body.decode('utf-8')
+        body_data = json.loads(body_unicode)
+#        print(body_data.get('i'))
+#        print(body_data.get('j'))
+#        print(body_data.get('uid'))
+#        result = re.findall('\d+',request.body)
+        col = body_data.get('i')
+        row = body_data.get('j')
+        id  = body_data.get('uid')
 #        print('Received move:')
 #        print((col, row),id)
         self.bots[id].apply_move('b', (row, col))
@@ -68,8 +77,31 @@ class My_Go(object):
 #        print((bot_col, bot_row))
         result = {'i': bot_col, 'j': bot_row}
         return HttpResponse(json.dumps(result))
-
-
+    
+    @csrf_exempt
+    def control(self,request):
+        body_unicode = request.body.decode('utf-8')
+        body_data = json.loads(body_unicode)
+        id  = body_data.get('uid')
+        bot_row, bot_col = self.bots[id].select_move('w')
+        print(bot_row,bot_col)
+        result = {'i': bot_col, 'j': bot_row}
+        return HttpResponse(json.dumps(result))
+    
+    @csrf_exempt
+    def counting(self,request):
+        body_unicode = request.body.decode('utf-8')
+        body_data = json.loads(body_unicode)
+        id  = body_data.get('uid')
+        print(id)
+        print('counting:')
+        status = scoring.evaluate_territory(self.bots[id].go_board)
+        black_area = status.num_black_territory + status.num_black_stones
+        white_area = status.num_white_territory + status.num_white_stones
+        white_score = white_area + 5.5
+        result = {"black":black_area,"white":white_score}
+        print(result)
+        return HttpResponse(json.dumps(result))
 
 
 
