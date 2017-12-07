@@ -83,11 +83,21 @@ class My_Go(object):
         body_unicode = request.body.decode('utf-8')
         body_data = json.loads(body_unicode)
         id  = body_data.get('uid')
-        bot_row, bot_col = self.bots[id].select_move('w')
-        print(bot_row,bot_col)
-        result = {'i': bot_col, 'j': bot_row}
-        return HttpResponse(json.dumps(result))
-    
+        context = body_data.get('func')
+        if context=='pass':
+            bot_row, bot_col = self.bots[id].select_move('w')
+            print(bot_row,bot_col)
+            result = {'i': bot_col, 'j': bot_row}
+            return HttpResponse(json.dumps(result))
+        else:
+            status = scoring.evaluate_territory(self.bots[id].go_board)
+            black_area = status.num_black_territory + status.num_black_stones
+            white_area = status.num_white_territory + status.num_white_stones
+            white_score = white_area + 5.5
+            result = {"black":black_area,"white":white_score}
+            print(result)
+            return HttpResponse(json.dumps(result))
+
     @csrf_exempt
     def counting(self,request):
         body_unicode = request.body.decode('utf-8')

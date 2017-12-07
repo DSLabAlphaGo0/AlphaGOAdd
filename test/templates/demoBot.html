@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <div id="begin_all">
+  <!-- <div id="begin_all">
     <div id="cover"></div>
 
     <div id="suspend">
@@ -37,12 +37,12 @@
       <a href="javascript:javascript:startGame()" id="start" class="button button-3d button-primary button-rounded">开局</a>
     </div>
 
-  </div>
+  </div> -->
 
   <div id="suspend_all">
     <div id="cover"> </div>
     <div id="suspend">
-      <h1 class="suspend_title">计算中...</h1>
+      <h1 id="suspend_title">计算中...</h1>
       <div class="suspend_score" id="suspend_white">
         <h2>白棋</h2>
         <div class="suspend_score_part"><p>得分: </p> <p id="score_w">0.0</p></div>
@@ -93,8 +93,6 @@
     else {
       // alert that this data is missing
     }
-
-
     function playMove(coord, player, ko, success, failure) {
       success = success || function() {};
       failure = failure || function() {};
@@ -102,15 +100,12 @@
       if (play.success) {
         jboard.setType(coord, player); // play stone
         jboard.setType(play.captures, JGO.CLEAR); // clear opponent's stones
-
         if (lastMove)
           jboard.setMark(lastMove, JGO.MARK.NONE); // clear previous mark
         if (ko)
           jboard.setMark(ko, JGO.MARK.NONE); // clear previous ko mark
-
         jboard.setMark(coord, JGO.MARK.CIRCLE); // mark move
         lastMove = coord;
-
         if (play.ko)
           jboard.setMark(play.ko, JGO.MARK.CIRCLE); // mark ko, too
         ko = play.ko;
@@ -121,13 +116,10 @@
         failure(play.errorMsg);
       }
     }
-
     function illegalMove(errorMsg) {
       console.log("Illegal move: " + errorMsg);
       alert("Illegal move: " + errorMsg);
     }
-
-
     // Man, do I want to use superagent here. Repeat: add. no. dependencies.
     function postMove(url, data, success) {
       console.log("Sent move to server!");
@@ -148,24 +140,17 @@
       xmlhttp.send(JSON.stringify(data));
       return xmlhttp;
     }
-
-
     jboard.setType(JGO.util.getHandicapCoordinates(jboard.width, 0), JGO.BLACK);
-
     jsetup.setOptions({
       stars: {
         points: 5
       }
     });
-
-
     jsetup.create('board', function(canvas) {
-
       canvas.addListener('click', function(coord, ev) {
         console.log("Attepting human move:");
         console.log("(" + coord.i + ", " + coord.j + ")");
         var opponent = (player == JGO.BLACK) ? JGO.WHITE : JGO.BLACK;
-
         if (ev.shiftKey) { // on shift do edit
           if (jboard.getMark(coord) == JGO.MARK.NONE)
             jboard.setMark(coord, JGO.MARK.SELECTED);
@@ -173,13 +158,11 @@
             jboard.setMark(coord, JGO.MARK.NONE);
           return;
         }
-
         // clear hover away - it'll be replaced or then it will be an illegal move
         // in any case so no need to worry about putting it back afterwards
         if (lastHover)
           jboard.setType(new JGO.Coordinate(lastX, lastY), JGO.CLEAR);
         lastHover = false;
-
         playMove(coord, player, ko, function() {
           player = JGO.WHITE;
           coord['uid'] = id;
@@ -198,17 +181,13 @@
         });
         player = JGO.BLACK;
       });
-
       canvas.addListener('mousemove', function(coord, ev) {
         if (coord.i == -1 || coord.j == -1 || (coord.i == lastX && coord.j == lastY))
           return;
-
         if (lastHover) // clear previous hover if there was one
           jboard.setType(new JGO.Coordinate(lastX, lastY), JGO.CLEAR);
-
         lastX = coord.i;
         lastY = coord.j;
-
         if (jboard.getType(coord) == JGO.CLEAR && jboard.getMark(coord) == JGO.MARK.NONE) {
           jboard.setType(coord, player == JGO.WHITE ? JGO.DIM_WHITE : JGO.DIM_BLACK);
           lastHover = true;
@@ -216,11 +195,9 @@
         else
           lastHover = false;
       });
-
       canvas.addListener('mouseout', function(ev) {
         if (lastHover)
           jboard.setType(new JGO.Coordinate(lastX, lastY), JGO.CLEAR);
-
         lastHover = false;
       });
     });

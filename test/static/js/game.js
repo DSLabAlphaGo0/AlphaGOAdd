@@ -27,17 +27,17 @@ function showCurrent() {
 }
 
 function giveUp() {
-    $('#suspend_title').html("你输了");
-    $("#custom").attr("href","javascript:restart();");
-    var data={};
-    data.w_score = data.w_on = data.w_eat = 0;
-    data.b_score = data.b_on = data.b_eat = 0;
-    showInfo(data);
+    // $('#suspend_title').html("你输了");
+    // $("#custom").attr("href","javascript:restart();");
+    // var data={};
+    // data.w_score = data.w_on = data.w_eat = 0;
+    // data.b_score = data.b_on = data.b_eat = 0;
+    // showInfo(data);
     $.ajax({
         type: "POST",
         dataType: "json",
         url: "/control",
-        data: "uid="+id+"&func=giveup",
+        data: JSON.stringify({"uid":id,"func":"giveup"}),
         success: function (json) {
             // TODO:定制内容
             $('#suspend_title').html("你输了");
@@ -60,10 +60,10 @@ function hide() {
 }
 
 function showInfo(data) {
-    $('#score_w').html(data.w_score);
+    $('#score_w').html(data.white);
     $('#count_w').html(data.w_on);
     $('#kill_w').html(data.w_eat);
-    $('#score_b').html(data.b_score);
+    $('#score_b').html(data.black);
     $('#count_b').html(data.b_on);
     $('#kill_b').html(data.b_eat);
     scroll(0,0);
