@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 
         // Do hinting/linting with 'grunt jshint'
         jshint: {
-            files: ['Gruntfile.js', 'JGO/**/*.js', 'Django_Go/**/*.js'],
+            files: ['Gruntfile.js', 'JGO/**/*.js', 'test/**/*.js'],
             options: {
                 jshintrc: true
             }

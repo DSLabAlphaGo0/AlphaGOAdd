@@ -67,7 +67,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Django_Go.wsgi.application'
+WSGI_APPLICATION = 'test.wsgi.application'
 
 
 # Database
