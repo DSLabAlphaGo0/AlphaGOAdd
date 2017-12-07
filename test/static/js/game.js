@@ -4,7 +4,7 @@ function passStep() {
         dataType: "json",
         async: false,
         url: "/control",
-        data: "uid="+id+"&func=pass",
+        data: JSON.stringify({"uid":id,"func":"pass"}),
         success: function (json) {
             playMove(new JGO.Coordinate(json.i, json.j), JGO.WHITE, ko);
         }
@@ -17,7 +17,7 @@ function showCurrent() {
         dataType: "json",
         async: false,
         url: "/control",
-        data: "uid="+id+"&func=count",
+        data: JSON.stringify({"uid":id,"func":"count"}),
         success: function (json) {
             $('#suspend_title').html("当前棋局");
             $("#custom").attr("href","javascript:hide();");
