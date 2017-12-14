@@ -27,12 +27,6 @@ function showCurrent() {
 }
 
 function giveUp() {
-    $('#suspend_title').html("你输了");
-    $("#custom").attr("href","javascript:restart();");
-    var data={};
-    data.w_score = data.w_on = data.w_eat = 0;
-    data.b_score = data.b_on = data.b_eat = 0;
-    showInfo(data);
     $.ajax({
         type: "POST",
         dataType: "json",
@@ -82,5 +76,62 @@ function reScroll() {
     $('body').css({
       "overflow-x":"auto",
       "overflow-y":"auto"
+    });
+}
+
+// var list_standard = ["高级", "中级", "低级"];
+var list_standard = ["低级", "中级", "高级"];
+var standard = 1;
+
+function addSta() {
+    if(standard < 2) {
+        $("#choose_sta").val(list_standard[++standard]);
+    }
+}
+
+function decSta() {
+    if(standard > 0) {
+        $("#choose_sta").val(list_standard[--standard]);
+    }
+}
+
+function addNum() {
+    if($("#allow_num").val() < 8) {
+        $("#allow_num").val(parseInt($("#allow_num").val()) + 2);
+    }
+    else {
+        $("#allow_num").value = 8;
+    }
+}
+
+function decNum() {
+    if($("#allow_num").val() <= 0) {
+        $("#allow_num").val(0);
+    }
+    else {
+        $("#allow_num").val(parseInt($("#allow_num").val()) - 2);
+    }
+}
+
+function gameConfig() {
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "/config",
+        data : {
+            "stone" : $('input:radio[name="stone"]').val(),
+            "standard" : standard,
+            "allow" : parseInt($('#allow_num').val())
+        },
+        success : function () {
+            reScroll();
+            $('#begin_all').hide();
+            reScroll();
+            //TODO:
+            startGame();
+        },
+        error : function () {
+            alert("网络传输失败,请检查网络")
+        }
     });
 }
