@@ -8,11 +8,11 @@ import yaml
 import json
 import re
 import numpy as np
-from betago import scoring
-from betago.dataloader import goboard
+from betago.betago import scoring
+from betago.betago.dataloader import goboard
 from keras.models import model_from_yaml
-from betago.model import KerasBot
-from betago.processor import SevenPlaneProcessor
+from betago.betago.model import KerasBot
+from betago.betago.processor import SevenPlaneProcessor
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.decorators.csrf import ensure_csrf_cookie
