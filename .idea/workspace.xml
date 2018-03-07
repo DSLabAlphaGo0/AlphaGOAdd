@@ -2,29 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7f746227-3104-46ab-83ab-04ab460f7696" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/test/static/css/board.css" afterPath="$PROJECT_DIR$/test/static/css/board.css" />
-      <change beforePath="$PROJECT_DIR$/test/static/css/buttons.css" afterPath="$PROJECT_DIR$/test/static/css/buttons.css" />
-      <change beforePath="$PROJECT_DIR$/test/static/css/goDemoTest.css" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/test/static/css/login.css" afterPath="$PROJECT_DIR$/test/static/css/login.css" />
-      <change beforePath="$PROJECT_DIR$/test/static/images/large/board.js" afterPath="$PROJECT_DIR$/test/static/images/large/board.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/images/medium/board.js" afterPath="$PROJECT_DIR$/test/static/images/medium/board.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/js/JGO/auto.js" afterPath="$PROJECT_DIR$/test/static/js/JGO/auto.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/js/JGO/board.js" afterPath="$PROJECT_DIR$/test/static/js/JGO/board.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/js/JGO/canvas.js" afterPath="$PROJECT_DIR$/test/static/js/JGO/canvas.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/js/JGO/constants.js" afterPath="$PROJECT_DIR$/test/static/js/JGO/constants.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/js/JGO/coordinate.js" afterPath="$PROJECT_DIR$/test/static/js/JGO/coordinate.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/js/JGO/index.js" afterPath="$PROJECT_DIR$/test/static/js/JGO/index.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/js/JGO/node.js" afterPath="$PROJECT_DIR$/test/static/js/JGO/node.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/js/JGO/notifier.js" afterPath="$PROJECT_DIR$/test/static/js/JGO/notifier.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/js/JGO/record.js" afterPath="$PROJECT_DIR$/test/static/js/JGO/record.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/js/JGO/setup.js" afterPath="$PROJECT_DIR$/test/static/js/JGO/setup.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/js/JGO/sgf.js" afterPath="$PROJECT_DIR$/test/static/js/JGO/sgf.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/js/JGO/stones.js" afterPath="$PROJECT_DIR$/test/static/js/JGO/stones.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/js/JGO/util.js" afterPath="$PROJECT_DIR$/test/static/js/JGO/util.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/js/dist/jgoboard-latest.js" afterPath="$PROJECT_DIR$/test/static/js/dist/jgoboard-latest.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/js/game.js" afterPath="$PROJECT_DIR$/test/static/js/game.js" />
-      <change beforePath="$PROJECT_DIR$/test/static/model_zoo/one_epoch_cnn_bot.yml" afterPath="$PROJECT_DIR$/test/static/model_zoo/one_epoch_cnn_bot.yml" />
-      <change beforePath="$PROJECT_DIR$/test/static/model_zoo/one_epoch_cnn_weights.hd5" afterPath="$PROJECT_DIR$/test/static/model_zoo/one_epoch_cnn_weights.hd5" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -63,7 +41,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -74,17 +51,13 @@
             <path>
               <item name="django" type="b2602c69:ProjectViewProjectNode" />
               <item name="django" type="462c0819:PsiDirectoryNode" />
-              <item name="betago" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="django" type="b2602c69:ProjectViewProjectNode" />
-              <item name="django" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -128,7 +101,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24959569" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25482625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
