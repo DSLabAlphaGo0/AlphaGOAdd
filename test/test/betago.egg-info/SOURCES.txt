@@ -1,0 +1,7 @@
+setup.py
+betago.egg-info/PKG-INFO
+betago.egg-info/SOURCES.txt
+betago.egg-info/dependency_links.txt
+betago.egg-info/not-zip-safe
+betago.egg-info/requires.txt
+betago.egg-info/top_level.txt

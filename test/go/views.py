@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 #from __future__ import unicode_literals
 
-
+import os
 from django.shortcuts import render
 from django.http import HttpResponse
 import yaml
 import json
 import re
 import numpy as np
-from betago import scoring
-from betago.dataloader import goboard
+from betago.betago import scoring
+from betago.betago.dataloader import goboard
 from keras.models import model_from_yaml
-from betago.model import KerasBot
-from betago.processor import SevenPlaneProcessor
+from betago.betago.model import KerasBot
+from betago.betago.processor import SevenPlaneProcessor
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -23,8 +23,8 @@ class My_Go(object):
     
     def __init__(self):
         bot_name = 'demo'
-        model_file = 'static/model_zoo/' + bot_name + '_bot.yml'
-        weight_file = 'static/model_zoo/' + bot_name + '_weights.hd5'
+        model_file = 'test/static/model_zoo/' + bot_name + '_bot.yml'
+        weight_file = 'test/static/model_zoo/' + bot_name + '_weights.hd5'
         with open(model_file, 'r') as f:
             yml = yaml.load(f)
             self.model = model_from_yaml(yaml.dump(yml))

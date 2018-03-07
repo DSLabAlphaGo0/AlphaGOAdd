@@ -1,0 +1,7 @@
+keras
+gomill
+Flask>=0.10.1
+Flask-Cors
+future
+h5py
+six
