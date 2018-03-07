@@ -1,5 +1,6 @@
 'use strict';
 
+// 自动化模块
 //var request = require('superagent');
 var C = require('./constants');
 
@@ -42,8 +43,8 @@ function parseMarkup(str) {
 }
 
 // Array of loaded boards
-//var boards = [];
-
+// var boards = [];
+//
 // Available attributes:
 // data-jgostyle: Evaluated and used as board style
 // data-jgosize: Used as board size unless data-jgosgf is defined

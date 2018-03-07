@@ -5,7 +5,7 @@ var C = require('./constants');
 
 /**
  * Helper class to store node information, apply and revert changes easily.
- *
+ * 棋子节点信息
  * @param {Board} jboard Board object to make changes on.
  * @param {Node} parent Parent node or null if no parent.
  * @param {Object} info Node information - ko coordinate, comment, etc.

@@ -9,7 +9,7 @@ var Coordinate = require('./coordinate');
 
 /**
  * Load images and defined by object and invoke callback when completed.
- *
+ * 加载图片
  * @param {Object} sources A dictionary of sources to load.
  * @param {function} callback A callback function to call with image dict.
  */
@@ -19,7 +19,7 @@ exports.loadImages = function(sources, callback) {
   for(var src in sources) // count non-false properties as images
     if(sources.hasOwnProperty(src) && sources[src])
       imagesLeft++;
-
+  // 计数回调
   var countdown = function() {
     if(--imagesLeft <= 0) {
       callback(images);
@@ -38,9 +38,9 @@ exports.loadImages = function(sources, callback) {
 
 /**
  * Helper function to create coordinates for standard handicap placement.
- *
+ * 让先
  * @param {int} size Board size (9, 13, 19 supported).
- * @param {itn} num Number of handicap stones.
+ * @param {int} num Number of handicap stones.
  * @returns {Array} Array of Coordinate objects.
  */
 exports.getHandicapCoordinates = function(size, num) {
@@ -63,7 +63,7 @@ exports.getHandicapCoordinates = function(size, num) {
 
 /**
  * Deep extend an object.
- *
+ * 深扩展
  * @function extend
  * @param {Object} dest Destination object to extend.
  * @param {Object} src Source object which properties will be copied.

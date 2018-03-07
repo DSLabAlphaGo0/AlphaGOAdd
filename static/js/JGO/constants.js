@@ -13,13 +13,13 @@ exports.INTERSECTION = {
   BLACK: 1,
   /** White stone */
   WHITE: 2,
-  /** Semi-transparent black stone */
+  /** Semi-transparent black stone 半透明*/
   DIM_BLACK: 3,
   /** Semi-transparent white stone */
   DIM_WHITE: 4
 };
 
-// Alias all objects into globals
+// Alias all objects into globals 化名
 util.extend(exports, exports.INTERSECTION);
 
 /**

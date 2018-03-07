@@ -6,7 +6,7 @@ var util = require('./util');
 
 /**
  * Setup helper class to make creating Canvases easy.
- *
+ * 新建画布
  * @param {Board} jboard Board object to listen to.
  * @param {Object} boardOptions Base board options like BOARD.large.
  * @constructor
@@ -84,7 +84,7 @@ Setup.prototype.getNotifier = function() {
  * Create Canvas based on current settings. When textures are used,
  * image resources need to be loaded, so the function returns and
  * asynchronously call readyFn after actual initialization.
- *
+ * 准备开始，先加载图片配置
  * @param {Object} elemId The element id or HTML Node where to create the canvas in.
  * @param {function} readyFn Function to call with canvas once it is ready.
  */

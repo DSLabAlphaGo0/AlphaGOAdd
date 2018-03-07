@@ -2,6 +2,7 @@
 
 /**
  * SGF loading module.
+ * 棋局的标准格式 sgf
  * @module sgf
  */
 
@@ -12,8 +13,8 @@ var C = require('./constants');
 var ERROR; // error holder for sgfParse etc.
 
 var fieldMap = {
-  'AN': 'annotator',
-  'CP': 'copyright',
+  'AN': 'annotator',  // 注解者
+  'CP': 'copyright',  // 版权
   'DT': 'date',
   'EV': 'event',
   'GN': 'gameName',
@@ -197,7 +198,9 @@ function parseSGF(sgf) {
 
   if('a~b'.split(/(~)/).length === 3) {
     tokens = sgf.split(/([\[\]\(\);])/); // split into an array at '[', ']', '(', ')', and ';', and include separators in array
-  } else { // Thank you IE for not working
+  }
+  // IE浏览器下
+  else {
     var blockStart = 0, delimiters = '[]();';
 
     tokens = [];

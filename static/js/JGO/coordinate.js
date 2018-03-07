@@ -3,6 +3,7 @@
 var SGFLetters = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
 /**
+ * 用于棋子定位
  * Create a helper class to create coordinates from (1,2) (zero-based),
  * 'ah' type of input. You can create a coordinate with no arguments, in
  * which case it defaults to (0,0), or with one argument, in which case it
@@ -40,7 +41,7 @@ var Coordinate = function(i, j) {
 
 /**
  * Compare with another coordinate.
- *
+ * 两个位置进行对比
  * @param {Coordinate} Coordinate.
  * @returns {boolean} true if equal, false if not.
  */
@@ -50,7 +51,7 @@ Coordinate.prototype.equals = function(c) {
 
 /**
  * Make an SGF-type 'ai' string representation of the coordinate.
- *
+ * 将位置用标准形式表现出来
  * @returns {string} String representation.
  */
 Coordinate.prototype.toString = function() {
@@ -59,7 +60,7 @@ Coordinate.prototype.toString = function() {
 
 /**
  * Make a copy of this coordinate.
- *
+ * 位置复制
  * @returns {Coordinate} A copy of this coordinate.
  */
 Coordinate.prototype.copy = function() {
