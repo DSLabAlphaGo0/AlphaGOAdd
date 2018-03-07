@@ -15,3 +15,4 @@ JGO.sgf = require('./sgf');
 JGO.auto = require('./auto');
 
 module.exports = JGO;
+// 模块拓展

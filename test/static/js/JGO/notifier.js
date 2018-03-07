@@ -3,7 +3,7 @@
 /**
  * A change notifier class that can listen to changes in a Board and keep
  * multiple Canvas board views up to date.
- *
+ * 监听器，对棋盘位置情况进行监听更改
  * @param {Board} jboard The board to listen to.
  * @constructor
  */
@@ -32,6 +32,7 @@ var Notifier = function(jboard) {
         this.canvases[c].draw(this.board, this.min.i, this.min.j,
           this.max.i, this.max.j);
 
+      // bind()最简单的用法是创建一个函数，使这个函数不论怎么调用都有同样的this值
       this.updateScheduled = false; // changes updated, scheduled function run
     }.bind(this), 0);
   }.bind(this);

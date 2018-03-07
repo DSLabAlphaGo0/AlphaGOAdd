@@ -6,7 +6,7 @@ var C = require('./constants');
  * Create a jGoBoard stones object. This is a facility that can draw
  * stones and markers on a HTML5 canvas. Only used internally by the
  * library.
- *
+ * 画棋子
  * @param {Object} options Options array.
  * @constructor
  */
@@ -33,9 +33,11 @@ Stones.prototype.drawStone = function(ctx, type, ox, oy, scale) {
 
     if(type == C.WHITE) {
       ctx.strokeStyle = '#000000';
+      // stroke() HTML5 canvas stroke() 方法,画线
       ctx.stroke();
     }
-  } else {
+  }
+  else {
     // round x, y for crisp rendering
     ctx.drawImage(stone, 0, 0, stone.width, stone.height,
         Math.round(ox - stone.width / 2 * scale),

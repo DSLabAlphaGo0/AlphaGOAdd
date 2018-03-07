@@ -6,7 +6,7 @@ var Node = require('./node');
 /**
  * Create a go game record that can handle plays and variations. A Board
  * object is created that will reflect the current position in game record.
- *
+ * 创建一个棋局记录
  * @param {int} width Board width.
  * @param {int} height Board height.
  * @constructor

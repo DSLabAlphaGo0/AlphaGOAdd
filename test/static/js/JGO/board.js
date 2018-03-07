@@ -7,7 +7,7 @@ var util = require('./util');
 /**
  * Go board class for storing intersection states. Also has listeners that
  * are notified on any changes to the board via setType() and setMark().
- *
+ * 创建棋盘，包括棋盘大小和标记
  * @param {int} width The width of the board
  * @param {int} [height] The height of the board
  * @constructor
@@ -84,7 +84,7 @@ Board.prototype.toString = function(c) {
 
 /**
  * Simple iteration over all coordinates.
- *
+ * 遍历棋盘上每个点
  * @param {func} func The iterator method, which is called with the
  * coordinate, type and mark parameters.
  * @param {int} [i1] Column start.
@@ -117,7 +117,7 @@ Board.prototype.clear = function() {
 
 /**
  * Set the intersection type at given coordinate(s).
- *
+ * 对位置进行设定类型
  * @param {Object} c A Coordinate or Array of them.
  * @param {Object} t New type, e.g. CLEAR, BLACK, ...
  */
@@ -141,7 +141,7 @@ Board.prototype.setType = function(c, t) {
 
 /**
  * Set the intersection mark at given coordinate(s).
- *
+ * 对位置点进行标记
  * @param {Object} c A Coordinate or Array of them.
  * @param {Object} m New mark, e.g. MARK.NONE, MARK.TRIANGLE, ...
  */
@@ -204,7 +204,7 @@ Board.prototype.getMark = function(c) {
 
 /**
  * Get neighboring coordinates on board.
- *
+ * 获取相邻点的位置信息
  * @param {Coordinate} c The coordinate
  * @returns {Array} The array of adjacent coordinates of given type (may be an empty array)
  */
@@ -286,7 +286,7 @@ Board.prototype.getGroup = function(coord, overrideType) {
 
 /**
  * Get a raw copy of board contents. Will not include any listeners!
- *
+ * 获得棋盘内容的原始拷贝
  * @returns {Object} Board contents.
  */
 Board.prototype.getRaw = function() {
@@ -314,7 +314,7 @@ Board.prototype.setRaw = function(raw) {
  * Calculate impact of a move on board. Returns a data structure outlining
  * validness of move (success & errorMsg) and possible captures and ko
  * coordinate.
- *
+ * 研究落子情况，返回结果
  * @param {Board} jboard Board to play the move on (stays unchanged).
  * @param {Coordinate} coord Coordinate to play or null for pass.
  * @param {int} stone Stone to play - BLACK or WHITE.
@@ -349,7 +349,7 @@ Board.prototype.playMove = function(coord, stone, ko) {
     }
   }
 
-  // Suicide not allowed
+  // Suicide not allowed 不允许自杀
   if(captures.length === 0 &&
       !this.hasType(this.getGroup(coord, stone).neighbors, C.CLEAR))
     return { success: false,

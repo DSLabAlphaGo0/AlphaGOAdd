@@ -1,7 +1,9 @@
+
 body {
   text-align: center;
   background-image: url("/static/images/large/backend.png");
   background-repeat: no-repeat;
+  overflow: hidden;
 }
 div {
   margin: 10px auto;
@@ -71,7 +73,7 @@ div {
   position: absolute;
   z-index: 999;
   width: 30%;
-  margin: 200px 35%;
+  margin: 50px 35%;
   background-color: #f7f5f6;
   background-image: url(/static/images/large/background4.png);
   background-repeat: no-repeat;
@@ -79,7 +81,7 @@ div {
   border-radius: 25px;
 }
 
-.suspend_title {
+#suspend_title {
   margin: 40px 0 1px 0;
   color: #211d1d;
 }

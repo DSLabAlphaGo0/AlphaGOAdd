@@ -388,6 +388,7 @@ Canvas.prototype.draw = function(jboard, i1, j1, i2, j2) {
     switch(type) {
       case C.BLACK:
       case C.DIM_BLACK:
+        // globalAlpha HTML5 透明度
         this.ctx.globalAlpha = type == C.BLACK ? 1 : this.opt.stone.dimAlpha;
         this.stones.drawStone(this.ctx, type, ox, oy);
         markColor = this.opt.mark.blackColor; // if we have marks, this is the color
@@ -424,7 +425,7 @@ Canvas.prototype.draw = function(jboard, i1, j1, i2, j2) {
  * event as parameters. Supported event types are 'click', 'mousemove',
  * and 'mouseout'. With 'mouseout', there is no coordinate parameter for
  * callback.
- *
+ * 监听鼠标点击事件
  * @param {String} event The event to listen to, e.g. 'click'.
  * @param {function} callback The callback.
  */
