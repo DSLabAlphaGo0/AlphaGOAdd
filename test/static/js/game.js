@@ -1,10 +1,12 @@
+
 function passStep() {
+    console.log(id+"放弃一手");
     $.ajax({
         type: "POST",
         dataType: "json",
         async: false,
         url: "/control",
-        data: "uid="+id+"&func=pass",
+        data: JSON.stringify({"uid":id,"func":'pass'}),
         success: function (json) {
             playMove(new JGO.Coordinate(json.i, json.j), JGO.WHITE, ko);
         }
@@ -17,7 +19,7 @@ function showCurrent() {
         dataType: "json",
         async: false,
         url: "/control",
-        data: "uid="+id+"&func=count",
+        data: JSON.stringify({"uid":id,"func":'count'}),
         success: function (json) {
             $('#suspend_title').html("当前棋局");
             $("#custom").attr("href","javascript:hide();");
@@ -31,7 +33,7 @@ function giveUp() {
         type: "POST",
         dataType: "json",
         url: "/control",
-        data: "uid="+id+"&func=giveup",
+        data: JSON.stringify({"uid":id,"func":'giveup'}),
         success: function (json) {
             // TODO:定制内容
             $('#suspend_title').html("你输了");
@@ -54,10 +56,10 @@ function hide() {
 }
 
 function showInfo(data) {
-    $('#score_w').html(data.w_score);
+    $('#score_w').html(data.black);
     $('#count_w').html(data.w_on);
     $('#kill_w').html(data.w_eat);
-    $('#score_b').html(data.b_score);
+    $('#score_b').html(data.white);
     $('#count_b').html(data.b_on);
     $('#kill_b').html(data.b_eat);
     scroll(0,0);

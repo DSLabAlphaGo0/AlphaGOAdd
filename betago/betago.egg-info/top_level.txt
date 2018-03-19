@@ -1,2 +1,0 @@
-betago
-tests

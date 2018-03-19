@@ -38,6 +38,8 @@ var Setup = function(board, boardOptions) {
   this.board = board; // board to follow
   this.notifier = new Notifier(this.board); // notifier to canvas
   this.options = util.extend(defaults, boardOptions); // clone
+
+    this.canvas = null;
 };
 
 /**
@@ -89,23 +91,46 @@ Setup.prototype.getNotifier = function() {
  * @param {function} readyFn Function to call with canvas once it is ready.
  */
 Setup.prototype.create = function(elemId, readyFn) {
-  var options = util.extend({}, this.options); // create a copy
+    if (this.canvas == null) {
+        var options = util.extend({}, this.options); // create a copy
 
-  var createCallback = function(images) {
-    var jcanvas = new Canvas(elemId, options, images);
+        var createCallback = function (images) {
+            var jcanvas = new Canvas(elemId, options, images);
 
-    jcanvas.draw(this.board, 0, 0, this.board.width-1, this.board.height-1);
+            this.canvas = jcanvas;
 
-    // Track and group later changes with Notifier
-    this.notifier.addCanvas(jcanvas);
+            jcanvas.draw(this.board, 0, 0, this.board.width - 1, this.board.height - 1);
 
-    if(readyFn) readyFn(jcanvas);
-  }.bind(this);
+            // Track and group later changes with Notifier
+            this.notifier.addCanvas(jcanvas);
 
-  if(this.options.textures) // at least some textures exist
-    util.loadImages(this.options.textures, createCallback);
-  else // blain BW board
-    createCallback({black:false,white:false,shadow:false,board:false});
+            if (readyFn) readyFn(jcanvas);
+        }.bind(this);
+
+        if (this.options.textures) // at least some textures exist
+            util.loadImages(this.options.textures, createCallback);
+        else // blain BW board
+            createCallback({black: false, white: false, shadow: false, board: false});
+    }
+    else {
+      var options = util.extend({}, this.options); // create a copy
+
+        var createCallback = function (images, FlagCanvas) {
+            // var jcanvas = new Canvas(elemId, options, images);
+            var jcanvas = this.canvas;
+            jcanvas.draw(this.board, 0, 0, this.board.width - 1, this.board.height - 1);
+
+            // Track and group later changes with Notifier
+            this.notifier.addCanvas(jcanvas);
+
+            if (readyFn) readyFn(jcanvas);
+        }.bind(this);
+
+        if (this.options.textures) // at least some textures exist
+            util.loadImages(this.options.textures, createCallback);
+        else // blain BW board
+            createCallback({black: false, white: false, shadow: false, board: false});
+    }
 };
 
 module.exports = Setup;

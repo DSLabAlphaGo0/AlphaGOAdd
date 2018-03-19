@@ -105,7 +105,6 @@ function process(JGO, div) {
       if(elem.mark) jboard.setMark(c, elem.mark);
     }
   }
-
   jsetup.create(div);
 }
 
@@ -471,7 +470,7 @@ Board.prototype.playMove = function(coord, stone, ko) {
         captures = captures.concat(g.group);
         // save captured coordinates so we don't capture them twice
         for(var j=0; j<g.group.length; j++)
-          captured[g.group[j].toString()] = true; 
+          captured[g.group[j].toString()] = true;
       }
     }
   }
@@ -993,7 +992,7 @@ exports.MARK = {
  * Board coordinate array.
  * @constant
  */
-exports.COORDINATES = 'ABCDEFGHJKLMNOPQRSTUVWXYZ'.split('');
+exports.COORDINATES = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 },{"./util":13}],5:[function(require,module,exports){
 'use strict';
@@ -1509,6 +1508,8 @@ var Setup = function(board, boardOptions) {
   this.board = board; // board to follow
   this.notifier = new Notifier(this.board); // notifier to canvas
   this.options = util.extend(defaults, boardOptions); // clone
+
+    this.canvas = null;
 };
 
 /**
@@ -1560,23 +1561,49 @@ Setup.prototype.getNotifier = function() {
  * @param {function} readyFn Function to call with canvas once it is ready.
  */
 Setup.prototype.create = function(elemId, readyFn) {
-  var options = util.extend({}, this.options); // create a copy
+  if (this.canvas == null) {
+      console.log(" setup in");
+        var options = util.extend({}, this.options); // create a copy
 
-  var createCallback = function(images) {
-    var jcanvas = new Canvas(elemId, options, images);
+        var createCallback = function (images) {
+            var jcanvas = new Canvas(elemId, options, images);
 
-    jcanvas.draw(this.board, 0, 0, this.board.width-1, this.board.height-1);
+            this.canvas = jcanvas;
+            console.log("canvas:" + this.canvas);
 
-    // Track and group later changes with Notifier
-    this.notifier.addCanvas(jcanvas);
+            jcanvas.draw(this.board, 0, 0, this.board.width - 1, this.board.height - 1);
 
-    if(readyFn) readyFn(jcanvas);
-  }.bind(this);
+            // Track and group later changes with Notifier
+            this.notifier.addCanvas(jcanvas);
 
-  if(this.options.textures) // at least some textures exist
-    util.loadImages(this.options.textures, createCallback);
-  else // blain BW board
-    createCallback({black:false,white:false,shadow:false,board:false});
+            if (readyFn) readyFn(jcanvas);
+        }.bind(this);
+
+        if (this.options.textures) // at least some textures exist
+            util.loadImages(this.options.textures, createCallback);
+        else // blain BW board
+            createCallback({black: false, white: false, shadow: false, board: false});
+    }
+    else {
+      var options = util.extend({}, this.options); // create a copy
+
+        var createCallback = function (images, FlagCanvas) {
+            // var jcanvas = new Canvas(elemId, options, images);
+            var jcanvas = this.canvas;
+            console.log("canvas:" + this.canvas);
+            jcanvas.draw(this.board, 0, 0, this.board.width - 1, this.board.height - 1);
+
+            // Track and group later changes with Notifier
+            this.notifier.addCanvas(jcanvas);
+
+            if (readyFn) readyFn(jcanvas);
+        }.bind(this);
+
+        if (this.options.textures) // at least some textures exist
+            util.loadImages(this.options.textures, createCallback);
+        else // blain BW board
+            createCallback({black: false, white: false, shadow: false, board: false});
+    }
 };
 
 module.exports = Setup;
@@ -1668,7 +1695,7 @@ function sgfMove(node, name, values, moveMarks) {
 
   if(moveMarks && play.ko)
       node.setMark(play.ko, C.MARK.SQUARE);
-  
+
   if(play.success && coord !== null) {
     node.setType(coord, player); // play stone
     node.setType(play.captures, C.CLEAR); // clear opponent's stones

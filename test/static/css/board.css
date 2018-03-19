@@ -11,7 +11,7 @@ div {
 }
 
 .title {
-  margin: 40px 0;
+  margin: 30px 0;
   color: #cc9772;
   font-size: -webkit-xxx-large;
 }
@@ -114,4 +114,25 @@ div {
 
 #custom {
   margin: -3px auto 40px;
+}
+
+#board-all {
+  padding-bottom: 1285px;
+  margin-bottom: 20px;
+}
+
+#board {
+  float: left;
+  margin-left: 10%;;
+}
+
+#board-show {
+  /*float: left;*/
+  /*margin-left: 10%;*/
+  padding-left: 1500px;
+  width: 1070px;
+  height: 1070px;
+}
+#control {
+  margin-top: 10px;
 }
