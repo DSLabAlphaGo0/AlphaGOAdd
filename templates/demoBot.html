@@ -1,0 +1,89 @@
+{% load staticfiles %}
+
+<!DOCTYPE HTML>
+<html lang="en">
+<link rel="shortcut icon" type="image/png" href="{% static "/favicon.ico" %}">
+
+<head>
+  <meta charset="utf-8">
+  <title>BetaGo user interface</title>
+  <link rel="stylesheet" type="text/css" href="{% static "css/board.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "css/buttons.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "css/login.css" %}">
+  <script src="{% static "js/jquery.min.js" %}"></script>
+</head>
+
+<body>
+  <div id="suspend_all">
+    <div id="cover"> </div>
+    <div id="suspend">
+      <h1 id="suspend_title">计算中...</h1>
+      <div class="suspend_score" id="suspend_white">
+        <h2>白棋</h2>
+        <div class="suspend_score_part"><p>得分: </p> <p id="score_w">0.0</p></div>
+        <div class="suspend_score_part"><p>在局数: </p> <p id="count_w">0</p></div>
+        <div class="suspend_score_part"><p>吃子数: </p> <p id="kill_w">0</p></div>
+      </div>
+      <div class="suspend_score" id="suspend_black">
+        <h2>黑棋</h2>
+        <div class="suspend_score_part"><p>得分: </p> <p id="score_b">0.0</p></div>
+        <div class="suspend_score_part"><p>在局数: </p> <p id="count_b">0</p></div>
+        <div class="suspend_score_part"><p>吃子数: </p> <p id="kill_b">0</p></div>
+      </div>
+
+      <a href="javascript:" id="custom" class="button button-3d button-primary button-rounded">关闭</a>
+    </div>
+  </div>
+
+  <h2 class="title"> Our Go Game </h2>
+
+    <div id="board-all">
+      <div id="board2"></div>
+      <div id="cover-1"> </div>
+      <div id="board1"></div>
+    </div>
+    <div id="gif-all">
+        <div id="cover-s"> </div>
+        <div id="strategy"> <img src="{% static "images/large/4.gif" %}" /> </div>
+        <div id="cover-v"> </div>
+        <div id="value"> <img src="{% static "images/large/2.gif" %}" /> </div>
+    </div>
+
+    {% csrf_token %}
+  <script src="{% static "js/dist/jgoboard-latest.js" %}" ></script>
+  <script src="{% static "images/large/board.js" %}"></script>
+  <script>
+        var id = {{uid}};
+        var jboard = new JGO.Board(19);
+        var jsetup = new JGO.Setup(jboard, JGO.BOARD.largeWalnut);
+        var player = JGO.BLACK; // next player
+        var ko = false,
+          lastMove = false; // ko coordinate and last move coordinate
+        var lastHover = false,
+          lastX = -1,
+          lastY = -1; // hover helper vars
+        var boardInit = {{post}};
+        if (boardInit){
+          // Set the board
+          var boardRaw = jboard.getRaw(); // Use current state (blank) as a template
+          boardRaw.stones = boardInit; // Add in our stone data
+          jboard.setRaw(boardRaw); // Set it and forget it®
+        }
+
+        var jboard1 = new JGO.Board(19);
+        var jsetup1 = new JGO.Setup(jboard1, JGO.BOARD.largeWalnut);
+        jsetup1.create('board2', function(canvas1) {});
+  </script>
+
+  <script src="{% static "js/qipan.js" %}"></script>
+  <script src="{% static "js/game.js"  %}"></script>
+
+
+  <div id="control">
+    <a href="javascript:passStep();"  class="button">过手</a>
+    <a href="javascript:showCurrent();" class="button">当前棋局</a>
+    <a href="javascript:giveUp();" class="button">认输</a>
+  </div>
+</body>
+
+</html>
